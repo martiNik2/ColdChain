@@ -2,48 +2,106 @@ import { Menu } from 'lucide-react'
 import { useState } from 'react'
 import { useNavigate } from 'react-router'
 import Button from './Button'
+import { useAuth, type AuthContextProps } from 'react-oidc-context'
+
+const SYSTEM_ROLES = [
+	"default-roles-coldchain",
+  	"offline_access",
+  	"uma_authorization"
+]
 
 interface SidebarProps {
 	SidebarLinks?: string[]
-	SetIsOpen: (state:boolean)=>void
+	SetIsSidebarOpen: (state:boolean)=>void
+	Auth: AuthContextProps
 }
 
 export default function Navbar(){
-	const [isOpen,setIsOpen] = useState(false)
+	const [isSidebarOpen,setIsSidebarOpen] = useState(false)
 	const navigate = useNavigate()
+	const auth = useAuth()
+
+
+	const roles = (auth.user?.profile?.realm_access as { roles?: string[] } | undefined)?.roles ?? []
+	const name = auth.user?.profile?.name as string
+
+	console.log(name)
+	console.log(auth.user?.profile)
+
+	const mainRole = roles.find((r)=>!SYSTEM_ROLES.includes(r)) as string
 
 	return (
 		<>
 			<div className="w-full h-20 bg-primary-tint flex border-b-2 border-b-slate-300 flex-row justify-between p-4 items-center">
-				<img src="/ColdChainLogo.svg" className="w-12 h-12" onClick={()=> navigate("/")}/>
-				<div className="hidden md:flex">
-					<Button>
-						Sign in
-					</Button>
+				<img src="/ColdChainLogo.svg" className="w-12 h-12 hover:cursor-pointer" onClick={()=> navigate("/")}/>
+				<div className="hidden md:flex gap-4">
+					{
+						auth.isAuthenticated ?
+						(
+							<>
+								<div className="flex flex-col items-center">
+									<div>{name}</div>
+									<div>{mainRole}</div>
+								</div>
+								<Button OnClick={()=> auth.signoutRedirect()}>
+									Sign out
+								</Button>
+							</>
+						)
+						:(
+							<Button OnClick={()=> auth.signinRedirect()}>
+								Sign in
+							</Button>
+						)
+					}
 				</div>
 				<button 
 				className="md:hidden"
 				onClick={()=>{
-					setIsOpen(true)
+					setIsSidebarOpen(true)
 				}}>
 					<Menu size={40}/>
 				</button>
 			</div>
-			{isOpen && <Sidebar SidebarLinks={["foo","bar","baz"]} SetIsOpen={()=>setIsOpen(false)}/>}
+			{isSidebarOpen && <Sidebar 
+			SidebarLinks={["foo","bar","baz"]} 
+			SetIsSidebarOpen={()=>setIsSidebarOpen(false)}
+			Auth={auth}
+			/>}
 		</>
 	)
 }
 
 
-function Sidebar({ SidebarLinks, SetIsOpen } : SidebarProps){
+function Sidebar({ SidebarLinks, SetIsSidebarOpen, Auth } : SidebarProps){
 	const navigate = useNavigate()
+
+	const roles = (Auth.user?.profile?.realm_access as { roles?: string[] } | undefined)?.roles ?? []
+	const name = Auth.user?.profile?.name as string
+
+	const mainRole = roles.find((r)=>!SYSTEM_ROLES.includes(r)) as string
+
 	return (
 		<div className="fixed inset-0 z-50 bg-gray-600/50 md:hidden">
 			<div className="flex flex-col fixed inset-y-0 right-0 w-64 h-screen bg-blue-200 z-51">
-				<button className="self-end p-4" onClick={()=>SetIsOpen(false)}>
-					<Menu size={40}/>
-				</button>
-				<ul className="pt-10">
+				<div className="flex flex-row items-center justify-between p-4">
+					{Auth.isAuthenticated
+					? <Button OnClick={()=>Auth.signoutRedirect()}>
+						Sign out
+					</Button>
+					: <Button OnClick={()=>Auth.signinRedirect()}>
+						Sign in
+					</Button>
+					}
+					<button onClick={()=>SetIsSidebarOpen(false)}>
+						<Menu size={40}/>
+					</button>
+				</div>
+				<div className="flex flex-col p-2 gap-1 text-lg">
+					<span>{name}</span>
+					<span>{mainRole}</span>
+				</div>
+				<ul className="pt-4">
 					{SidebarLinks?.map((page)=>(
 						<li 
 						key={page}
@@ -51,7 +109,7 @@ function Sidebar({ SidebarLinks, SetIsOpen } : SidebarProps){
 						onClick={(event)=> {
 							navigate(`/${page.toLowerCase()}`)
 							event.stopPropagation()
-							SetIsOpen(false)
+							SetIsSidebarOpen(false)
 						}}
 						>{page}</li>
 					))}
