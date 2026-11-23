@@ -1,6 +1,6 @@
 import Button from "../components/Button";
 
-export default function Home(){
+export default function HomePage(){
 	return (
 		<div className="p-8 text-xl space-y-8 max-w-5xl">
 			<h1 className="text-2xl font-semibold pt-4">
