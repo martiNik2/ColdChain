@@ -1,5 +1,8 @@
-set -e
+#!/usr/bin/env bash
+set -euo pipefail
 
 psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-EOSQL
-	CREATE DATABASE kc_auth
+	CREATE USER ${KC_DB_USERNAME} WITH PASSWORD '${KC_DB_PASSWORD}';
+	CREATE DATABASE kc_auth OWNER ${KC_DB_USERNAME};
+	GRANT ALL PRIVILEGES ON DATABASE kc_auth TO ${KC_DB_USERNAME};
 EOSQL
