@@ -1,0 +1,12 @@
+@import "tailwindcss";
+
+
+@theme {
+	--font-sans: "Montserrat", sans-serif;
+	--color-primary: #005cff;
+	--color-hover: #0047cc;
+	--color-primary-tint: #eef4ff;
+	--color-released: #059669;
+	--color-warning: #d97706;
+	--color-excursion: #dc2626;
+}
