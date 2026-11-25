@@ -25,8 +25,7 @@ export default function Navbar(){
 	const roles = (auth.user?.profile?.realm_access as { roles?: string[] } | undefined)?.roles ?? []
 	const name = auth.user?.profile?.name as string
 
-	console.log(name)
-	console.log(auth.user?.profile)
+	console.log("she is "+name)
 
 	const mainRole = roles.find((r)=>!SYSTEM_ROLES.includes(r)) as string
 
@@ -82,8 +81,8 @@ function Sidebar({ SidebarLinks, SetIsSidebarOpen, Auth } : SidebarProps){
 	const mainRole = roles.find((r)=>!SYSTEM_ROLES.includes(r)) as string
 
 	return (
-		<div className="fixed inset-0 z-50 bg-gray-600/50 md:hidden">
-			<div className="flex flex-col fixed inset-y-0 right-0 w-64 h-screen bg-blue-200 z-51">
+		<div onClick={()=> SetIsSidebarOpen(false)} className="fixed inset-0 z-50 bg-gray-600/50 md:hidden">
+			<div onClick={(e)=>e.stopPropagation()} className="flex flex-col fixed inset-y-0 right-0 w-64 h-screen bg-blue-200 z-51">
 				<div className="flex flex-row items-center justify-between p-4">
 					{Auth.isAuthenticated
 					? <Button OnClick={()=>Auth.signoutRedirect()}>
