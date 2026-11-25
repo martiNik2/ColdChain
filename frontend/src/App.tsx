@@ -2,6 +2,8 @@ import { Route, Routes } from "react-router";
 import Navbar from "./components/Navbar";
 import HomePage from "./pages/Home";
 import LoadingPage from "./pages/Loading";
+import ShipmentsPage from "./pages/Shipments";
+import CreateShipmentPage from "./pages/CreateShipment";
 
 export default function App() {
 	return (
@@ -11,6 +13,8 @@ export default function App() {
 				<Routes>
 					<Route path="/" element={<HomePage/>}/>	
 					<Route path="/loading" element={<LoadingPage/>}/>	
+					<Route path="/shipments" element={<ShipmentsPage/>}/>	
+					<Route path="/shipments/create" element={<CreateShipmentPage/>}/>	
 				</Routes>
 			</main>
 		</div>

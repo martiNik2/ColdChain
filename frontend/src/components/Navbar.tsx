@@ -26,7 +26,6 @@ export default function Navbar(){
 	const name = auth.user?.profile?.name as string
 
 	console.log(name)
-	console.log(auth.user?.profile)
 
 	const mainRole = roles.find((r)=>!SYSTEM_ROLES.includes(r)) as string
 
