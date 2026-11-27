@@ -1,6 +1,10 @@
+import { useAuth } from "react-oidc-context";
 import Button from "../components/Button";
 
 export default function HomePage(){
+	const auth = useAuth()
+
+
 	return (
 		<div className="p-8 text-xl space-y-8 max-w-5xl">
 			<h1 className="text-2xl font-semibold pt-4">
@@ -16,12 +20,17 @@ export default function HomePage(){
 				into use, cuts down on back-and-forth calls, and prevents unnecessary
 				shipment discards.
 			</p>
-			<p>
-				To get started, sign in with your company's OpenID Connect credentials:
-			</p>
-			<Button>
-				Sign in
-			</Button>	
+			{
+				!auth.isAuthenticated && 
+				<>
+					<p>
+						To get started, sign in with your company's OpenID Connect credentials:
+					</p>
+					<Button OnClick={()=> auth.signinRedirect()}>
+						Sign in
+					</Button>	
+				</>
+			}
 		</div>
 	)
 }

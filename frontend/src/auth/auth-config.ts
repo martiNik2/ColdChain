@@ -4,7 +4,4 @@ export const oidcConfig = {
 	redirect_uri: window.location.origin,
 	post_logout_redirect_uri: window.location.origin,
 	automaticSilentRenew: true,
-	onSignInCallback: ()=>{
-		window.history.replaceState({}, document.title, window.location.pathname)
-	},
 }

@@ -8,7 +8,11 @@ import { oidcConfig } from './auth/auth-config.ts'
 
 createRoot(document.getElementById('root')!).render(
   	<StrictMode>
-		<AuthProvider {...oidcConfig}>
+		<AuthProvider {...oidcConfig}
+		onSigninCallback={
+			()=>window.history.replaceState({}, document.title, window.location.pathname)
+		}
+		>
 			<BrowserRouter>
     			<App />
 			</BrowserRouter>

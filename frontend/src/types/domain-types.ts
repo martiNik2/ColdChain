@@ -20,7 +20,7 @@ export type AuditEntry = {
 
 export type Logger = {
 	id: string,
-	calibrationDate: string
+	calibrationDate: string //ISO string: yyyy-mm-dd
 }
 
 export type Reading = {
