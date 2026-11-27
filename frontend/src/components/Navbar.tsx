@@ -25,8 +25,6 @@ export default function Navbar() {
 	const roles = (auth.user?.profile?.realm_access as { roles?: string[] } | undefined)?.roles ?? []
 	const name = auth.user?.profile?.name as string
 
-	console.log("she is " + name)
-
 	const mainRole = roles.find((r) => !SYSTEM_ROLES.includes(r)) as string
 	
 	return (
