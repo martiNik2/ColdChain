@@ -5,5 +5,5 @@ export type CreateShipmentDTO = {
 	origin: string
 	destination: string
 	loggerId: string
-	expectedArrival: Date
+	expectedArrival: string
 }

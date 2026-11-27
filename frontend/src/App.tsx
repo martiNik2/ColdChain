@@ -8,9 +8,9 @@ import LoggersPage from "./pages/Loggers";
 
 export default function App() {
 	return (
-		<div className="min-h-screen">
+		<div className="min-h-screen bg-slate-50">
 			<Navbar />
-			<main className="min-h-screen bg-slate-50">
+			<main className="min-h-screen">
 				<Routes>
 					<Route path="/" element={<HomePage/>}/>	
 					<Route path="/loading" element={<LoadingPage/>}/>	

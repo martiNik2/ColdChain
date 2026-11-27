@@ -72,6 +72,12 @@ export default function ShipmentsPage(){
 		/>
 	}
 
+	if (test_shipments.length == 0){
+		return <div className="text-center text-2xl text-semibold pt-8">
+			No Shipments found. Create shipments to track
+		</div>
+	}
+
 	return (
 		<div className="p-6">
 			<div className="flex flex-row pb-8 justify-between items-center">
