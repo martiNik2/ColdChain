@@ -1,3 +1,5 @@
+import type { IsoTimestampString } from "./date-types"
+
 export type CreateShipmentDTO = {
 	product: string
 	lots: string
@@ -5,5 +7,5 @@ export type CreateShipmentDTO = {
 	origin: string
 	destination: string
 	loggerId: string
-	expectedArrival: string
+	expectedArrival: IsoTimestampString
 }

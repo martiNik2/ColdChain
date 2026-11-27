@@ -3,10 +3,11 @@ import type { Logger } from "../types/domain-types";
 import Dialog from "./Dialog";
 import Button from "./Button";
 import { isCalibrationExpired } from "../utils/calibration-date";
+import type { CalendarDateString } from "../types/date-types";
 
 interface LoggerCardProps {
 	logger: Logger
-	onCalibrationChange: (id: string, date: string) => void
+	onCalibrationChange: (id: string, date: CalendarDateString) => void
 }
 
 export default function LoggerCard({ logger, onCalibrationChange }: LoggerCardProps) {

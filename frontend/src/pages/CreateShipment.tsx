@@ -5,6 +5,7 @@ import type { Logger } from "../types/domain-types";
 import { isCalibrationExpired } from "../utils/calibration-date";
 import Button from "../components/Button";
 import type { CreateShipmentDTO } from "../types/dtos";
+import { datetimeLocalToIso, isoToDateLocal } from "../utils/date";
 
 const test_loggers = [
 	{ id: "20432", calibrationDate: "2010-03-12" },
@@ -34,6 +35,9 @@ export default function CreateShipmentPage(){
 	)
 
 	const handleSubmit = async (formData: FormData)=>{
+		const expectedArrival = String(formData.get('expectedArrival')).trim()
+		const isoExpectedArrival = datetimeLocalToIso(expectedArrival)
+
 		const createShipment = {
 			product: String(formData.get('product')).trim(),
 			lots: String(formData.get('lots')).trim(),
@@ -41,10 +45,9 @@ export default function CreateShipmentPage(){
 			origin: String(formData.get('origin')).trim(),
 			destination: String(formData.get('destination')).trim(),
 			loggerId: String(formData.get('loggerId')).trim(),
-			expectedArrival: String(formData.get('expectedArrival')).trim(),
+			expectedArrival: isoExpectedArrival
 		} as CreateShipmentDTO
 
-		console.log(createShipment)
 	}
 
 	return (
@@ -134,7 +137,7 @@ export default function CreateShipmentPage(){
 						:
 						availableLoggers.map((logger)=>
 						<option key={logger.id} value={logger.id}>
-							#{logger.id.slice(0,5)}... - Calibrated {logger.calibrationDate}
+							#{logger.id.slice(0,5)}... - Calibrated {isoToDateLocal(logger.calibrationDate)}
 						</option>
 						)
 					}

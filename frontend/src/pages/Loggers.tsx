@@ -6,6 +6,7 @@ import ErrorPage from "./Error";
 import Button from "../components/Button";
 import { useState } from "react";
 import Dialog from "../components/Dialog";
+import type { CalendarDateString } from "../types/date-types";
 
 
 const test_loggers = [
@@ -36,7 +37,7 @@ export default function LoggersPage() {
 		)
 	}
 
-	const updateCalibration = (id: string, date: string) => {
+	const updateCalibration = (id: string, date: CalendarDateString) => {
 		setLoggers(
 			prev => prev.map(i => i.id === id ? { ...i, calibrationDate: date } : i)
 		)
@@ -47,7 +48,6 @@ export default function LoggersPage() {
 		const newLogger = { id: String(Math.random() * 100), calibrationDate: date } as Logger
 		setLoggers((prev) => [...prev, newLogger])
 		setCreateLoggerDialog(false)
-		console.log('created')
 	}
 
 

@@ -1,5 +1,8 @@
+import type { CalendarDateString, IsoTimestampString } from "./date-types"
+
 export type Role = 'admin' |'dispatcher' |'quality_officer' |'receiver'	
-export type ShipmentState = 'created' | 'in-transit' | 'delivered' | 'quarantined' | 'accepted' | 'discarded'
+export type ShipmentState = 'created' | 'in-transit' 
+| 'delivered' | 'quarantined' | 'accepted' | 'discarded'
 
 
 export type User = {
@@ -15,17 +18,17 @@ export type AuditEntry = {
 	actorId: string,
 	action: string,
 	target: string,
-	timestamp: string
+	timestamp: IsoTimestampString
 }
 
 export type Logger = {
 	id: string,
-	calibrationDate: string //ISO string: yyyy-mm-dd
+	calibrationDate: CalendarDateString
 }
 
 export type Reading = {
 	shipmentId: string,
-	time: string,
+	time: IsoTimestampString,
 	temperature: number
 }
 
@@ -37,7 +40,7 @@ export type Shipment = {
 	origin: string,
 	destination: string,
 	loggerId: string,
-	expectedArrival: string,
+	expectedArrival: IsoTimestampString,
 	state: ShipmentState,
 	excursion: boolean,
 	arrivalTemperature?: number,
