@@ -4,9 +4,21 @@
 @theme {
 	--font-sans: "Montserrat", sans-serif;
 	--color-primary: #005cff;
+	--color-primary-subtle: #88b1f8;
+	--color-primary-tint: #eef4ff;
 	--color-hover: #0047cc;
 	--color-active: #003089;
+	--color-released: #059669;
+	--color-warning: #d97706;
+	--color-excursion: #dc2626;
+}
+
+.unused-class-for-color-checking {
+	--color-primary: #005cff;
+	--color-primary-subtle: #88b1f8;
 	--color-primary-tint: #eef4ff;
+	--color-hover: #0047cc;
+	--color-active: #003089;
 	--color-released: #059669;
 	--color-warning: #d97706;
 	--color-excursion: #dc2626;
